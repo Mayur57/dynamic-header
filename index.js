@@ -96,7 +96,7 @@ async function draw(images) {
   try {
     const d = new Date();
     let hour = d.getHours();
-    console.log(parseInt(hour))
+    console.log(parseInt(hour));
     const welcomeMsgs = [
       "Good Morning!",
       "Good Afternoon!",
@@ -135,7 +135,7 @@ async function upload(files) {
         banner: base64,
       })
       .then(() => {
-        console.log("Upload to Twitter done");
+        console.log("✅ Uploaded to Twitter");
         delete_files(files);
       });
   } catch (error) {
@@ -148,9 +148,9 @@ async function delete_files(files) {
     files.forEach((file) => {
       if (file.input.includes(".png")) {
         fs.unlinkSync(file.input);
-        console.log("File removed");
       }
     });
+    console.log("✅ Flushed file buffer");
   } catch (err) {
     console.error(err);
   }
@@ -159,7 +159,7 @@ async function delete_files(files) {
 fetchFollowers(5);
 setInterval(() => {
   fetchFollowers(5);
-}, 60000);
+}, 120000);
 
 // http
 //   .createServer(function (req, res) {
