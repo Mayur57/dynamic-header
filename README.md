@@ -1,2 +1,2 @@
 # dynamic-header
-Changes Twitter dynamically to update latest followers
+Changes the Twitter header dynamically to update latest followers
