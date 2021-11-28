@@ -5,11 +5,23 @@ const axios = require("axios");
 const sharp = require("sharp");
 const fs = require("fs");
 
+const express = require("express");
+const app = express();
+const port = 6969;
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
+});
+
 const twitterClient = new TwitterClient({
-  apiKey: process.env.API_KEY,
-  apiSecret: process.env.API_SECRET,
-  accessToken: process.env.ACCESS_TOKEN,
-  accessTokenSecret: process.env.ACCESS_SECRET,
+  apiKey: "jOR227HJmGB5aHexJMNLCebBQ",
+  apiSecret: "oCjzXe4G5eDw1aNyNWsyLuYWEcma14XoaZZNWEOJ2lOJOlKwV1",
+  accessToken: "749528490274353152-ytsi1bZgc7tKk44DG9Pmh5FUPAwhNPd",
+  accessTokenSecret: 'AkHEl6PXpfg76obIC2keBztWcdwAKcPXp8lhJzduXJzJD',
 });
 
 async function processImage(url, imagePath) {
@@ -61,10 +73,36 @@ async function makeText(w, h, t) {
 }
 
 async function fetchFollowers(f_count) {
+
+var currentTime = new Date();
+
+var currentOffset = currentTime.getTimezoneOffset();
+
+var ISTOffset = 330; // IST offset UTC +5:30
+
+var ISTTime = new Date(
+  currentTime.getTime() + (ISTOffset + currentOffset) * 60000
+);
+
+// ISTTime now represents the time in IST coordinates
+
+var hoursIST = ISTTime.getHours();
+  var minutesIST = ("0" + ISTTime.getMinutes()).slice(-2);
+  var secIST = ISTTime.getSeconds();
+  // var dateIST = ISTTime.getDate();
+  var dateIST = ISTTime.toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+console.log("🛠️ Latest upload attempt made at " + dateIST + " @ " + hoursIST + ":" + minutesIST+":"+secIST);
   const follows = await twitterClient.accountsAndUsers.followersList({
     count: f_count,
   });
-  console.log(follows.screen_name);
+
+  follows.users.forEach((follower) => {
+    console.log(follower.screen_name)
+  })
 
   const images = [];
   let count = 0;
@@ -96,15 +134,17 @@ async function draw(images) {
   try {
     const d = new Date();
     let hour = d.getHours();
-    console.log(parseInt(hour));
+    // console.log(parseInt(hour));
     const welcomeMsgs = [
       "Good Morning!",
       "Good Afternoon!",
       "Good Evening!",
       "Go to sleep, bruh",
     ];
+    
     let welcomeTxt = "";
-
+    hour = hour + 5;
+    console.log(parseInt(hour))
     if (hour < 7) welcomeTxt += welcomeMsgs[3];
     else if (hour < 12) welcomeTxt += welcomeMsgs[0];
     else if (hour < 17) welcomeTxt += welcomeMsgs[1];
@@ -161,8 +201,7 @@ setInterval(() => {
   fetchFollowers(5);
 }, 120000);
 
-// http
-//   .createServer(function (req, res) {
-//     res.send("===================> running\n");
-//   })
-//   .listen(process.env.PORT || 6969);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`);
+});
