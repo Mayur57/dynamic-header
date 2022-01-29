@@ -150,7 +150,7 @@ async function delete_files(files) {
 fetchFollowers(5);
 setInterval(() => {
   fetchFollowers(5);
-}, 60000); // 10 mins
+}, 600000); // 10 mins
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
