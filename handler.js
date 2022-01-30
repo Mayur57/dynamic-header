@@ -9,8 +9,8 @@ const express = require("express");
 const app = express();
 
 function getVariable(name) {
-  if (fs.existsSync(`${__dirname}/../secrets.json`)) {
-    return require(`${__dirname}/../secrets.json`)[name];
+  if (fs.existsSync(`${__dirname}/secrets.json`)) {
+    return require(`${__dirname}/secrets.json`)[name];
   }
   return process.env[name];
 }
