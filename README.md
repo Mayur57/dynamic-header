@@ -2,7 +2,7 @@
 
 A serverless app that pulls data about latest Twitter followers to draw and upload a header to the account after a fixed interval. Uses AWS CloudWatch, AWS Lambda, and NodeJS.
 
-![code-flow](https://i.ibb.co/D9rcHX5/hhh-01.png)
+![code-flow](assets/hhh-01.png)
 
  ### Tools
 - Node v17.4.0
